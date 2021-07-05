@@ -10,23 +10,25 @@ import java.util.Scanner;
 //code related to sql, and also a method directly ported from the desktop version that directly uploads to the
 //sql server from a file location on the hdd
 
-public class SqlMinion {
+public class SqlRobot {
 
-    static String IP = "144.202.15.194";
-    static String USER = "TITS";
-    static String PASS = "TITS";
-    static String DB_URL = "jdbc:mysql://144.202.15.194:3306/teopolis";
+    static String USER = "jojo";
+    static String PASS = "jojojojo90!";
+    static String DB_URL = "jdbc:mysql://localhost:3306/titsgame";
 
-    public SqlMinion() {
+    public SqlRobot() {
     }
 
 
     public void insertQUESTION(String Text1, String User1) throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-        PreparedStatement bullet1 = conn.prepareStatement("INSERT INTO questions (Text, creator) VALUES (?, ?)");
+        // Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+           Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
+        System.out.println("Uploading the thing");
+        PreparedStatement bullet1 = conn.prepareStatement("INSERT INTO titsgame.questions (Text, creator) VALUES (?, ?)");
         bullet1.setString(1, Text1);
         bullet1.setString(2, User1);
+        System.out.println("Uploading the thing");
+
         bullet1.executeUpdate();
         System.out.println("Uploading the thing");
         conn.close();
@@ -34,9 +36,9 @@ public class SqlMinion {
     }
 
     public void insertSituation(String Text1, String User1) throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
 
-        PreparedStatement bullet1 = conn.prepareStatement("INSERT INTO situations (Text, creator) VALUES (?, ?)");
+        PreparedStatement bullet1 = conn.prepareStatement("INSERT INTO titsgame.situations (Text, creator) VALUES (?, ?)");
         bullet1.setString(1, Text1);
         bullet1.setString(2, User1);
         bullet1.executeUpdate();
@@ -46,10 +48,10 @@ public class SqlMinion {
     }
 
     public String pull_QUESTION(int id) throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
         ArrayList<String> arrayList1 = new ArrayList();
         Statement stmt = conn.createStatement();
-        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM questions WHERE id = ?");
+        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM titsgame.questions WHERE id = ?");
         bullet1.setInt(1, id);
         ResultSet rs = bullet1.executeQuery();
         while (rs.next()) {System.out.println(rs.getString("Text"));
@@ -59,10 +61,10 @@ public class SqlMinion {
 
     }
     public String SPQ  (int id) throws SQLException {{
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
         ArrayList<String> arrayList1 = new ArrayList();
         Statement stmt = conn.createStatement();
-        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM questions WHERE id = ?");
+        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM titsgame.questions WHERE id = ?");
         bullet1.setInt(1, id);
         ResultSet rs = bullet1.executeQuery();
         while (rs.next()) {
@@ -75,10 +77,10 @@ public class SqlMinion {
 
 
     public String pull_SITUATION(int id) throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
         ArrayList<String> arrayList1 = new ArrayList();
         Statement stmt = conn.createStatement();
-        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM situations WHERE id = ?");
+        PreparedStatement bullet1 = conn.prepareStatement("SELECT Text FROM titsgame.situations WHERE id = ?");
         bullet1.setInt(1, id);
         ResultSet rs = bullet1.executeQuery();
         while (rs.next()) {
@@ -91,10 +93,10 @@ public class SqlMinion {
 
 
     public int questSIZE() throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
         ArrayList<Integer> arrayList1 = new ArrayList();
         Statement stmt = conn.createStatement();
-        PreparedStatement bullet1 = conn.prepareStatement("SELECT COUNT(id) FROM questions");
+        PreparedStatement bullet1 = conn.prepareStatement("SELECT COUNT(id) FROM titsgame.questions");
 
         ResultSet rs = bullet1.executeQuery();
         while (rs.next()) {
@@ -108,11 +110,11 @@ public class SqlMinion {
     }
 
     public int sitsSIZE() throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?user=newuser&password=jojojojo90!");
         ArrayList<Integer> arrayList1 = new ArrayList();
 
         Statement stmt = conn.createStatement();
-        PreparedStatement bullet1 = conn.prepareStatement("SELECT COUNT(id) FROM situations");
+        PreparedStatement bullet1 = conn.prepareStatement("SELECT COUNT(id) FROM titsgame.situations");
 
         ResultSet rs = bullet1.executeQuery();
         while (rs.next()) {

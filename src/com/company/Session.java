@@ -7,7 +7,7 @@ public class Session {
     //this object holds our player objects
 
 
-    public RNGjesus rnGjesus1 = new RNGjesus();
+    public RNGRobot RNGRobot1 = new RNGRobot();
     private String gameid = "placeholder";
     private String Question = "placeholder";
     public ArrayList<Player> players = new ArrayList<Player>();
@@ -17,7 +17,7 @@ public class Session {
     //deleted if nobody has been listening to it for 30 minutes or so
     //check the gamelist for more info
     private String doomsdayclock = "no";
-    SqlMinion sqlminionSession1 = new SqlMinion();
+    // SqlMinion sqlminionSession1 = new SqlMinion();
     public String electorcount = "placeholder";
 
 
@@ -68,7 +68,11 @@ public class Session {
     }
 
     public void createQuestion() throws SQLException {
-        this.setQuestion(rnGjesus1.CreateCard());
+        this.setQuestion(RNGRobot1.CreateCard());
+    }
+
+    public String geteverything() {
+        return this.getQuestion() + this.getAnswers() + this.getScores();
     }
 
 
@@ -79,7 +83,7 @@ public class Session {
         StringBuilder endgamepaloki = new StringBuilder(" ");
         if (this.players.size() > 0) {
             for (int i = 0; i < this.players.size(); i++) {
-                endgamepaloki.append(" " + this.players.get(i).getPlayername() + "gave this answer" + " " + this.players.get(i).getAnswer() + " ");
+                endgamepaloki.append(" " + this.players.get(i).getPlayername() + "gave this answer" + " " + this.players.get(i).getAnswer() + "\n");
             }
         }
 
@@ -99,10 +103,12 @@ public class Session {
     //same as getanswers but for scores
     public String getScores() {
         StringBuilder endgamepaloki = new StringBuilder(" ");
+        endgamepaloki.append
+                (" " + "Judge Status" + "  " + this.getElectorcount()+"\n"+ " " + "Points are");
         if (this.players.size() > 0) {
             for (int i = 0; i < this.players.size(); i++) {
-                endgamepaloki.append(" " + "Judge Status" + "  " + this.getElectorcount() + " " + this.players.get(i).getPlayername() + " "
-                        + "has this number of points" + " " + this.players.get(i).getCard());
+                endgamepaloki.append
+                        ("\n "  +  " " + this.players.get(i).getCard());
             }
         }
 
@@ -111,7 +117,7 @@ public class Session {
 
     //adhoc way to increment score because again
     //players isn't a concurrenthashmap
-    public void incrementScore(String Player, String Judge) {
+    public void incrementScore(String Judge, String Player) {
         for (int i = 0; i < this.players.size(); i++) {
             if ((this.players.get(i).getPlayername().equals(Player) && (this.getElectorcount().equals(Judge)))) {
                 this.players.get(i).setScore(this.players.get(i).getScore() + 1);

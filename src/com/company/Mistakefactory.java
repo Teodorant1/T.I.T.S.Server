@@ -2,14 +2,20 @@ package com.company;
 
 public class Mistakefactory implements Runnable {
 
-    gamelist gamelist1;
+    listener listener1;
 //this main purpose of this is to basically trick java into effectively having 2 run() methods on a single object,
     //check Main and gamelist for more info
     public Mistakefactory() {}
-    public Mistakefactory( gamelist gamelist0 ) {this.gamelist1 = gamelist0;}
+    public Mistakefactory( listener listener0) {this.listener1 = listener0;}
 
 
 
     @Override
-    public void run() { this.gamelist1.cleandoom();}
+    public void run() {
+        try {
+            this.listener1.cleandoom();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

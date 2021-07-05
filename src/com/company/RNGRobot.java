@@ -9,9 +9,9 @@ import java.util.Collections;
 //has some defensive programming to not generate errors if you exhaust all the question
 //combinations
 
-public class RNGjesus {
+public class RNGRobot {
 
-    static   SqlMinion Sqlminion1 = new SqlMinion();
+    static SqlRobot sqlrobot1 = new SqlRobot();
     static   ArrayList <Integer> qnumbers = new ArrayList();
     static   ArrayList <Integer> snumbers = new ArrayList();
     static   ArrayList <String> payload = new ArrayList();
@@ -25,12 +25,12 @@ public class RNGjesus {
     }
 
 
-    public RNGjesus(){}
+    public RNGRobot(){}
 
     public void preparedecks () throws SQLException {
 
-        int qlength = Sqlminion1.questSIZE();
-        int slength = Sqlminion1.sitsSIZE();
+        int qlength = sqlrobot1.questSIZE();
+        int slength = sqlrobot1.sitsSIZE();
         if (qlength >= slength) {setGamesize(slength); }
         else {setGamesize(qlength);}
         for (int i = 1; i < gamesize; i++)
@@ -42,8 +42,8 @@ public class RNGjesus {
     public String CreateCard () throws SQLException{
 
         if( (qnumbers.size() > 0) && (snumbers.size() > 0))
-        {String s = (Sqlminion1.pull_SITUATION(snumbers.get(0)));
-        String q = (Sqlminion1.pull_QUESTION(qnumbers.get(0)));
+        {String s = (sqlrobot1.pull_SITUATION(snumbers.get(0)));
+        String q = (sqlrobot1.pull_QUESTION(qnumbers.get(0)));
         payload.add(s + " , " + q);
         snumbers.remove(0);
         qnumbers.remove(0);
