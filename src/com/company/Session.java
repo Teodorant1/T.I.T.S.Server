@@ -20,12 +20,26 @@ public class Session {
     // SqlMinion sqlminionSession1 = new SqlMinion();
     public String electorcount = "placeholder";
 
+    public boolean checkIfPlayerPresent (String playername  , String inputPassword)
+
+    {   for (int i = 0; i < this.players.size(); i++)
+    {
+        if ((this.players.get(i).getPassword().equals(inputPassword)) && this.players.get(i).getPlayername().equals(playername))
+        {return true;}
+        else return false;
+    }  return false; }
 
     private String password;
 
     public Session() {
     }
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public Session(String gameid) {
         this.gameid = gameid;
     }
@@ -46,8 +60,8 @@ public class Session {
         this.gameid = gameid;
     }
 
-    public void addplayer(String playername) {
-        this.players.add(new Player(playername));
+    public void addplayer(String playername , String password ) {
+        this.players.add(new Player(playername, password));
     }
 
 

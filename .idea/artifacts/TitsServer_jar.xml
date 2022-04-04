@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TitsServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TitsServer_jar</output-path>
+    <root id="archive" name="TitsServer.jar">
+      <element id="module-output" name="TitsServer" />
+      <element id="extracted-dir" path="D:/NOVA CARTHAGO/DESKTOP REFUGEES/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
