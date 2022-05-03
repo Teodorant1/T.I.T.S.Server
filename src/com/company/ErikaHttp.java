@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class ErikaHttp {
 
-    HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 20000);
+    HttpServer server = HttpServer.create(new InetSocketAddress(8001), 20000);
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     MyHttpHandler myHttpHandler1 = new MyHttpHandler();
 
