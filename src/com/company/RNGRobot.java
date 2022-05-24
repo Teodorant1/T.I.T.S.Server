@@ -14,7 +14,6 @@ public class RNGRobot {
     static SqlRobot sqlrobot1 = new SqlRobot();
     static ArrayList<Integer> qnumbers = new ArrayList();
     static ArrayList<Integer> snumbers = new ArrayList();
-    static ArrayList<String> payload = new ArrayList();
     int gamesize;
 
     public int getGamesize() {
@@ -32,8 +31,8 @@ public class RNGRobot {
 
 
     public void customPreparation ( String expansionname ) throws SQLException
-    { ArrayList<Integer> qlength = sqlrobot1.getUniqueCreatorSizeQQQ(expansionname);
-        ArrayList<Integer> slength = sqlrobot1.getUniqueCreatorSizeQQQ(expansionname);
+    {   ArrayList<Integer> qlength = sqlrobot1.getUniqueCreatorSizeQQQ(expansionname);
+        ArrayList<Integer> slength = sqlrobot1.getUniqueCreatorSizeSSS(expansionname);
         if (qlength.size() >= slength.size()) {
             setGamesize(slength.size());
         } else {
@@ -68,6 +67,8 @@ public class RNGRobot {
     public String CreateCard() throws SQLException {
 
         if ((qnumbers.size() > 0) && (snumbers.size() > 0)) {
+            ArrayList<String> payload = new ArrayList();
+
             String s = (sqlrobot1.pull_SITUATION(snumbers.get(0)));
             String q = (sqlrobot1.pull_QUESTION(qnumbers.get(0)));
             payload.add(s + " , " + q);
@@ -75,7 +76,7 @@ public class RNGRobot {
             qnumbers.remove(0);
             return (payload.get(payload.size() - 1));
         }
-        return " Ya'll have exhausted all the questions, maybe stop playing the game";
+        return " Ya'll have exhausted all the questions";
     }
 }
 

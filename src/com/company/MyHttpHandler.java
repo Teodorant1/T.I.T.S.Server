@@ -38,8 +38,6 @@ class MyHttpHandler implements HttpHandler {
         byte[] input = ios.readAllBytes();
         String inputString = new String(input, StandardCharsets.UTF_8);
         String[] Paloki = inputString.split("spergzilion");
-        System.out.println(inputString);
-        System.out.println(Paloki[0]+" "+Paloki[1]+" "+Paloki[2]+" "+Paloki[3]+" "+Paloki[4]+" "+Paloki[5]+" ");
         request response = new request();
         response.setPayload2("paloki");
         if (Paloki[0].equals("existinggame")) {
@@ -51,7 +49,6 @@ class MyHttpHandler implements HttpHandler {
                         Paloki[6], Paloki[7]);
 
                 response.setPayload2(handleResponse(request1));
-                System.out.println(response.getPayload2());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -93,7 +90,7 @@ class MyHttpHandler implements HttpHandler {
         t.getResponseHeaders().add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         t.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
         t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,HEAD");
-        t.sendResponseHeaders(200, response.getPayload2().length());
+        t.sendResponseHeaders(200, response.getPayload2().getBytes().length);
 
         OutputStream os = t.getResponseBody();
         os.write(response.getPayload2().getBytes());

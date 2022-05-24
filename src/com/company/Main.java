@@ -24,8 +24,7 @@ public class Main {
       oops.setListener1(ErikaHttp1.getMyHttpHandler1().getListener1());
 
       ThreadPoolExecutor ThreadPoolExecutor1 = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-       ThreadPoolExecutor1.submit(() -> {
-            oops.run();});
+       ThreadPoolExecutor1.submit(() -> {oops.run();});
 
 
         ErikaHttp1.launch();

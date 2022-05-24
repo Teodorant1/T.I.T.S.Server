@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class SqlRobot {
 
-    static String USER = "root";
-    static String PASS = "root";
+    static String USER = "paloki";
+    static String PASS = "paloki";
     static String DB_URL = "jdbc:mysql://localhost:3306/titsgame";
 
     public SqlRobot() {

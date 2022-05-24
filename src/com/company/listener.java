@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 public class listener implements Runnable {
 
 
-
     public ConcurrentHashMap<String, Session> sessionConcurrentHashMap = new ConcurrentHashMap<String, Session>();
     int socket1;
 
@@ -27,6 +26,7 @@ public class listener implements Runnable {
         this.socket1 = socket;
         this.sessionConcurrentHashMap = sessionConcurrentHashMap1;
     }
+
     public ConcurrentHashMap<String, Session> getSessionConcurrentHashMap() {
         return sessionConcurrentHashMap;
     }
@@ -34,15 +34,18 @@ public class listener implements Runnable {
     public void setSessionConcurrentHashMap(ConcurrentHashMap<String, Session> sessionConcurrentHashMap) {
         this.sessionConcurrentHashMap = sessionConcurrentHashMap;
     }
+
     //adds a new game
     public void addsession(String gameid, String password, String expansionname) throws SQLException {
 
         this.sessionConcurrentHashMap.put(gameid, new Session(gameid));
 
-        if (expansionname.equals("all")) {this.sessionConcurrentHashMap.get(gameid).RNGRobot1.preparedecks();}
-        else{this.sessionConcurrentHashMap.get(gameid).RNGRobot1.customPreparation(expansionname);}
+        if (expansionname.equals("all")) {
+            this.sessionConcurrentHashMap.get(gameid).RNGRobot1.preparedecks();
+        } else {
+            this.sessionConcurrentHashMap.get(gameid).RNGRobot1.customPreparation(expansionname);
+        }
         this.sessionConcurrentHashMap.get(gameid).createQuestion();
-
         this.sessionConcurrentHashMap.get(gameid).setPassword(password);
 
     }
@@ -89,6 +92,8 @@ public class listener implements Runnable {
 // check the request class for more info
     public String filtertheneedful1111(request request1) throws SQLException {
 
+        sessionConcurrentHashMap.forEach((k, v) ->
+                { System.out.println(sessionConcurrentHashMap.get(k).getGameid() +sessionConcurrentHashMap.get(k).getDoomsdayclock() ); });
 
         if (request1.getController().equals("existinggame")) {
             if (this.sessionConcurrentHashMap.containsKey(request1.getGameid())) {
@@ -110,13 +115,19 @@ public class listener implements Runnable {
                                 &&
                                 this.sessionConcurrentHashMap.get(request1.getGameid()).getPassword().equals(request1.getGamepassword()));
                         {
-                            if (request1.getMethodname().equals("getscore")) {
-                                return this.sessionConcurrentHashMap.get(request1.getGameid()).getScores();
-                            } else if (request1.getMethodname().equals("getanswers")) {
-                                return this.sessionConcurrentHashMap.get(request1.getGameid()).getAnswers();
+                            if (request1.getMethodname().equals("getresults")) {
+                                return this.sessionConcurrentHashMap.get(request1.getGameid()).getresults();
+                            } else if (request1.getMethodname().equals("getjudge")) {
+                                return this.sessionConcurrentHashMap.get(request1.getGameid()).getjudge();
                             } else if (request1.getMethodname().equals("getquestion")) {
                                 return this.sessionConcurrentHashMap.get(request1.getGameid()).getQuestion();
-                            } else if (request1.getMethodname().equals("vote")) {
+                            } else if (request1.getMethodname().equals("vote")
+                                    &&
+                                    (this.sessionConcurrentHashMap.get(request1.getGameid()).getElectorcount().equals(request1.getPlayername()))
+                                    &&
+                                    (this.sessionConcurrentHashMap.get(request1.getGameid()).getJudgepassword().equals(request1.getPlayerPassword()))
+                            ) {
+
 
                                 if (request1.getPayload1().equals(request1.getPlayername())) {
                                     this.sessionConcurrentHashMap.get(request1.getPlayername()).d20roll();
@@ -126,14 +137,16 @@ public class listener implements Runnable {
                                     System.out.println("2");
                                     this.sessionConcurrentHashMap.get(request1.getGameid()).createQuestion();
                                     System.out.println("3");
+
                                     this.sessionConcurrentHashMap.get(request1.getGameid()).setDoomsdayclock("no");
                                     System.out.println("4");
 
                                 }
                             } else if (request1.getMethodname().equals("answer")) {
                                 this.sessionConcurrentHashMap.get(request1.getGameid()).insAnswer(request1.getPlayername(), request1.getPayload1());
+                                return "answer inserted";
                             }
-                            return " it doesn't exist ";
+
                         }
                     }
                 }
@@ -145,16 +158,16 @@ public class listener implements Runnable {
                 if (this.sessionConcurrentHashMap.containsKey(request1.getGameid())) {
                     return " game already exists ";
                 } else {
-                    this.addsession(request1.getGameid(), request1.getGamepassword(),request1.getExpansion());
+                    this.addsession(request1.getGameid(), request1.getGamepassword(), request1.getExpansion());
                     this.sessionConcurrentHashMap.get(request1.getGameid()).addplayer(request1.getPlayername(), request1.getPlayerPassword());
                     this.sessionConcurrentHashMap.get(request1.getGameid()).setElectorcount(request1.getPlayername());
+                    this.sessionConcurrentHashMap.get(request1.getGameid()).setJudgepassword(request1.getPlayerPassword());
 
                 }
             }
         } else if (request1.getController().equals("createNewCards")) {
             if (request1.getMethodname().equals("questionbatch")) {
-                if (request1.getAuthor().equals("VasilizaicevVasilizaicev") && request1.getAuthorPassword().equals("FrankOConnorFrankOConnor") ||
-                        this.sql1.pullproducers(request1.getAuthor(), request1.getAuthorPassword())) {
+                if (this.sql1.pullproducers(request1.getAuthor(), request1.getAuthorPassword())) {
                     String[] Yormungandr = request1.getPayload1().split("yormungandryormungandr");
                     ArrayList<String> Asgard = new ArrayList<String>();
                     for (int i = 0; i < Yormungandr.length; i++) {
@@ -164,8 +177,7 @@ public class listener implements Runnable {
                 }
                 return " inserted questions ";
             } else if (request1.getMethodname().equals("situationbatch")) {
-                if (request1.getAuthor().equals("VasilizaicevVasilizaicev") && request1.getAuthorPassword().equals("FrankOConnorFrankOConnor") ||
-                        this.sql1.pullproducers(request1.getAuthor(), request1.getAuthorPassword())) {
+                if (this.sql1.pullproducers(request1.getAuthor(), request1.getAuthorPassword())) {
                     String[] Yormungandr = request1.getPayload1().split("yormungandryormungandr");
                     ArrayList<String> Asgard = new ArrayList<String>();
                     for (int i = 0; i < Yormungandr.length; i++) {
@@ -184,20 +196,17 @@ public class listener implements Runnable {
 
     //every 15 minutes this does some light cleaning by virtue of this being Mistakefactory's run method
     public void cleandoom() throws InterruptedException {
-        {
-            TimeUnit.MINUTES.sleep(15);
+       while (1>0){   System.out.println("KILL KILL KILL");
+            TimeUnit.MINUTES.sleep(10);
 
             this.sessionConcurrentHashMap.forEach((k, v) ->
             {
                 if (this.sessionConcurrentHashMap.get(k).getDoomsdayclock().equals("no")) {
                     this.sessionConcurrentHashMap.get(k).setDoomsdayclock("yes");
                 } else if (this.sessionConcurrentHashMap.get(k).getDoomsdayclock().equals("yes")) {
+
+                    System.out.println("removed game: "+sessionConcurrentHashMap.get(k).getGameid());
                     sessionConcurrentHashMap.remove(k);
-                }
-                try {
-                    TimeUnit.MINUTES.sleep(15);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             });
         }
