@@ -159,7 +159,8 @@ public class Session {
         for (int i = 0; i < this.players.size(); i++) {
             if (this.players.get(i).getPlayername().equals(this.electorcount)) {
                 System.out.println("derp");
-            } else this.setElectorcount(this.players.get(i).getPlayername());
+            } else  {this.setElectorcount(this.players.get(i).getPlayername());
+                     this.setJudgepassword(this.players.get(i).getPassword());    }
         }
     }
 

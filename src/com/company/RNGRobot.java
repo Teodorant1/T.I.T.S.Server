@@ -24,6 +24,8 @@ public class RNGRobot {
         this.gamesize = gamesize;
     }
 
+  //  public void printArray (ArrayList<Integer> stuff)
+ //   { stuff.forEach((Integer)->{ System.out.println(stuff.get(Integer)); });}
 
     public RNGRobot() {
     }
@@ -38,10 +40,16 @@ public class RNGRobot {
         } else {
             setGamesize(qlength.size());
         }
-        for (int i = 1; i < gamesize; i++) {
+
+        System.out.println("Custom");
+
+        if (qnumbers.size()<1 && snumbers.size()<1)
+        {for (int i = 1; i < getGamesize(); i++) {
             qnumbers.add(qlength.get(i));
             snumbers.add(slength.get(i));
-        }
+        }}
+
+
 
         Collections.shuffle(qnumbers);
         Collections.shuffle(snumbers); }
@@ -55,13 +63,18 @@ public class RNGRobot {
         } else {
             setGamesize(qlength);
         }
-        for (int i = 1; i < gamesize; i++) {
+        System.out.println("All");
+        if (qnumbers.size()<1 && snumbers.size()<1)
+        {for (int i = 1; i < getGamesize(); i++) {
             qnumbers.add(i);
-            snumbers.add(i);
-        }
+            snumbers.add(i);}}
 
         Collections.shuffle(qnumbers);
         Collections.shuffle(snumbers);
+     // System.out.println(qnumbers.size());
+        // printArray(qnumbers);
+
+
     }
 
     public String CreateCard() throws SQLException {
@@ -80,7 +93,7 @@ public class RNGRobot {
     }
 }
 
-//   public String createCardText (ArrayList <String>Shuffleboy)     {return Shuffleboy }
+
 
 
 

@@ -92,8 +92,9 @@ public class listener implements Runnable {
 // check the request class for more info
     public String filtertheneedful1111(request request1) throws SQLException {
 
-        sessionConcurrentHashMap.forEach((k, v) ->
-                { System.out.println(sessionConcurrentHashMap.get(k).getGameid() +sessionConcurrentHashMap.get(k).getDoomsdayclock() ); });
+      //  sessionConcurrentHashMap.forEach((k, v) ->
+      //  { System.out.println(sessionConcurrentHashMap.get(k).getGameid()
+      //  +sessionConcurrentHashMap.get(k).getDoomsdayclock() ); });
 
         if (request1.getController().equals("existinggame")) {
             if (this.sessionConcurrentHashMap.containsKey(request1.getGameid())) {
@@ -197,7 +198,7 @@ public class listener implements Runnable {
     //every 15 minutes this does some light cleaning by virtue of this being Mistakefactory's run method
     public void cleandoom() throws InterruptedException {
        while (1>0){   System.out.println("KILL KILL KILL");
-            TimeUnit.MINUTES.sleep(10);
+            TimeUnit.MINUTES.sleep(20);
 
             this.sessionConcurrentHashMap.forEach((k, v) ->
             {
