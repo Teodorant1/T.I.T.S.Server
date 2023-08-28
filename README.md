@@ -1,3 +1,5 @@
 #TitsServer
-This is the backend for a "Cards Against humanity" style game.
-http://teodorantinsanitytopicsimulator.com/ <---- the webapp on this link uses this code for the backend.
+This is the backend for a "Cards Against humanity" style game, the rules are very similar to cards against humanity, but the answer mechanic has been changed to be a bit more freeform.
+
+CAH rules that inspired this project: How to play Cards Against Humanity rules. One player picks a black card and reads the question or fill-in-the-blank phrase out loud.
+The rest of the players submit a White answer card and attempt to form the most hilarious inappropriate combo. The card picker chooses the winner, and points are awarded.
